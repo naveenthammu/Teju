@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teju 💖</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #ff4d6d, #590d22);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+}
+
+.container {
+    width: 92%;
+    max-width: 430px;
+    padding: 45px 25px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 40px rgba(255, 0, 100, 0.7);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    margin-bottom: 35px;
+    font-size: 24px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#yesBtn {
+    background: linear-gradient(45deg,#ff758f,#ff4d6d);
+    color: white;
+    box-shadow: 0 0 15px #ff758f;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background: #333;
+    color: white;
+    position: relative;
+}
+
+.message {
+    margin-top: 30px;
+    display: none;
+    animation: fadeIn 1s ease forwards;
+}
+
+.signature {
+    margin-top: 15px;
+    font-style: italic;
+    font-size: 14px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    font-size: 24px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.8);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Teju, Will You Be My Valentine? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💍</button>
+        <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="message" id="loveMessage">
+        💖 Teju Said YES 💖<br><br>
+        You are my forever, my happiness, my everything ❤️<br><br>
+        <div class="signature">
+        "With you, every moment feels magical."<br>
+        — Forever Yours, Naveen ❤️
+        </div>
+    </div>
+</div>
+
+<audio id="yesMusic">
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("loveMessage");
+const music = document.getElementById("yesMusic");
+
+/* Smooth Smart Running NO Button */
+function moveButton(e){
+    e.preventDefault();
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("click", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+/* Continuous Floating Hearts After YES */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-30px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+let heartInterval;
+
+yesBtn.addEventListener("click", function(){
+    music.play();
+    message.style.display="block";
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+
+    heartInterval = setInterval(createHeart, 200);
+});
+</script>
+
+</body>
+</html>
